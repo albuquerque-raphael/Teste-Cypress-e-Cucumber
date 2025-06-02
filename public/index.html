@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cadastro de Usuário</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f6fc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .mensagem {
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+  min-height: 20px; /* força altura */
+  }
+    .erro {
+      color: red;
+    }
+    .sucesso {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Cadastro</h2>
+    <form id="cadastroForm">
+      <input type="text" id="username" name="username" placeholder="Nome de usuário" />
+      <input type="email" id="email" name="email" placeholder="Email" />
+      <input type="password" id="password" name="password" placeholder="Senha" />
+      <button type="submit">Registrar</button>
+      <div id="mensagem" class="mensagem"></div>
+    </form>
+  </div>
+
+  <script>
+    const emailsCadastrados = ["joao@example.com", "emailjaexiste@email.com"];
+    const form = document.getElementById("cadastroForm");
+    const msg = document.getElementById("mensagem");
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+      msg.textContent = "";
+      msg.className = "mensagem";
+
+      const username = form.username.value.trim();
+      const email = form.email.value.trim();
+      const password = form.password.value.trim();
+
+      if (!username || !email || !password) {
+        msg.textContent = "Todos os campos são obrigatórios.";
+        msg.classList.add("erro");
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        msg.textContent = "E-mail inválido.";
+        msg.classList.add("erro");
+        return;
+      }
+
+      if (emailsCadastrados.includes(email)) {
+        msg.textContent = "E-mail já cadastrado.";
+        msg.classList.add("erro");
+        return;
+      }
+
+      msg.textContent = "Cadastro realizado com sucesso!";
+      msg.classList.add("sucesso");
+    });
+  </script>
+</body>
+</html>
