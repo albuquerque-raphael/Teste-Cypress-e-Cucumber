@@ -1,7 +1,7 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 
 Given('que estou na página local de cadastro', () => {
-  cy.visit('public/index.html');
+  cy.visit('http://localhost:8080/index.html');
 });
 
 When('clico no botão de registrar', () => {
@@ -48,4 +48,9 @@ Given('preencho os demais campos corretamente', () => {
 
 Then('devo ver uma mensagem de erro informando que o e-mail é inválido', () => {
   cy.get('#mensagem', { timeout: 5000 })
+});
+
+afterEach(function () {
+  const testName = this.test.title.replace(/ /g, '-').toLowerCase();
+  cy.screenshot(`final-${testName}`);
 });
